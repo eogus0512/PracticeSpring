@@ -1,5 +1,6 @@
 package hello.core.member;
 
+//entity
 public class Member {
     private Long id;
     private String name;
