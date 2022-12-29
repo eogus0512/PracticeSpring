@@ -19,12 +19,6 @@ import java.util.List;
 public class ValidationItemControllerV3 {
 
     private final ItemRepository itemRepository;
-    private final ItemValidator itemValidator;
-
-    @InitBinder
-    public void init(WebDataBinder dataBinder) {
-        dataBinder.addValidators(itemValidator);
-    }
 
     @GetMapping
     public String items(Model model) {
@@ -52,8 +46,11 @@ public class ValidationItemControllerV3 {
             return "validation/v3/addForm";
         }
 
-        if (bindingResult.hasErrors()) {
-            return "validation/v3/addForm";
+        if (item.getPrice() != null && item.getQuantity() != null) {
+            int resultPrice = item.getPrice() * item.getQuantity();
+            if (resultPrice < 10000) {
+                bindingResult.reject("totalPriceMin", new Object[]{10000, resultPrice}, null);
+            }
         }
 
         Item savedItem = itemRepository.save(item);
