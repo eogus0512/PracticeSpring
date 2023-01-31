@@ -41,21 +41,20 @@ public class ServletUploadControllerV2 {
         log.info("parts={}", parts);
 
         for (Part part : parts) {
-            log.info("==== Part ====");
+            log.info("==== PART ====");
             log.info("name={}", part.getName());
             Collection<String> headerNames = part.getHeaderNames();
             for (String headerName : headerNames) {
-                log.info("header={}: {}", headerName, part.getHeader(headerName));
+                log.info("header {}: {}", headerName, part.getHeader(headerName));
             }
-
             //편의 메서드
             //content-disposition; filename
-            log.info("submittedFileName={}", part.getSubmittedFileName());
+            log.info("submittedFilename={}", part.getSubmittedFileName());
             log.info("size={}", part.getSize()); //part body size
+
             //데이터 읽기
             InputStream inputStream = part.getInputStream();
-            String body = StreamUtils.copyToString(inputStream,
-                    StandardCharsets.UTF_8);
+            String body = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
             log.info("body={}", body);
 
             //파일에 저장하기
